@@ -1,0 +1,13 @@
+# Data is bulk and reproducible - never commit it
+data/
+!data/.gitkeep
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# OS
+.DS_Store
+Thumbs.db
