@@ -255,7 +255,7 @@ def main() -> int:
 
         ldf = clean[clean["session_key"] == skey]
         if ldf.empty:
-            skipped.append({"session_key": skey, "location": race["location"],
+            skipped.append({"session_key": skey, "round": int(race["round"]), "location": race["location"],
                             "reason": "no clean laps"})
             continue
 
@@ -266,7 +266,7 @@ def main() -> int:
             wet_len = float(race_stints.loc[~race_stints["compound"].isin(DRY), "stint_length"].sum())
             wet_share = wet_len / total_len if total_len else 0.0
         if wet_share > 0.02:
-            skipped.append({"session_key": skey, "location": race["location"],
+            skipped.append({"session_key": skey, "round": int(race["round"]), "location": race["location"],
                             "reason": f"wet race ({wet_share:.0%} of laps on wet tyres)"})
             print(f"{label}: skipped (wet)")
             continue
@@ -277,7 +277,7 @@ def main() -> int:
         try:
             coef = fit_pace(ldf)
         except ValueError as exc:
-            skipped.append({"session_key": skey, "location": race["location"], "reason": str(exc)})
+            skipped.append({"session_key": skey, "round": int(race["round"]), "location": race["location"], "reason": str(exc)})
             continue
 
         deg = {c: coef[f"deg_{c}"] for c in DRY}
@@ -351,7 +351,7 @@ def main() -> int:
                 start_age, start_compound, max_stint,
             )
             if not np.isfinite(best_cost):
-                skipped.append({"session_key": skey, "location": race["location"],
+                skipped.append({"session_key": skey, "round": int(race["round"]), "location": race["location"],
                                 "reason": f"no feasible strategy under {max_stint}-lap stint limit"})
                 continue
             regret_s = max(actual_cost - best_cost, 0.0)
@@ -380,7 +380,7 @@ def main() -> int:
             })
 
         if not race_regret:
-            skipped.append({"session_key": skey, "location": race["location"],
+            skipped.append({"session_key": skey, "round": int(race["round"]), "location": race["location"],
                             "reason": "no replayed drivers"})
             continue
 
