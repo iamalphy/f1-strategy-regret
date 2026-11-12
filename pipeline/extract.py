@@ -8,8 +8,9 @@ is cached on disk. Re-running the pipeline therefore costs nothing and works
 offline once the cache is warm.
 
 Usage:
-    python pipeline/extract.py            # all 2024 races
-    python pipeline/extract.py --force    # ignore cache
+    python pipeline/extract.py                  # all 2024 races
+    python pipeline/extract.py --year 2025      # another season
+    python pipeline/extract.py --force          # ignore cache
 """
 from __future__ import annotations
 
