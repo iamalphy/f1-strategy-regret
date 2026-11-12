@@ -1,0 +1,3 @@
+# Keep language statistics representative of the source, not generated output.
+dashboard/index.html linguist-generated
+docs/*.png binary
